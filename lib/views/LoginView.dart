@@ -1,24 +1,16 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_application_2/views/LoginView.dart';
-import 'firebase_options.dart';
+import 'package:flutter_application_2/firebase_options.dart';
 
-void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MaterialApp(
-    title: 'first app',
-    home: LoginView(),
-  ));
-}
-class RegisterView extends StatefulWidget {
-  const RegisterView({super.key});
+class LoginView extends StatefulWidget {
+  const LoginView({super.key});
 
   @override
-  State<RegisterView> createState() => _RegisterViewState();
+  State<LoginView> createState() => _LoginViewState();
 }
 
-class _RegisterViewState extends State<RegisterView> {
+class _LoginViewState extends State<LoginView> {
   late final TextEditingController _email=TextEditingController();
   late final TextEditingController _password=TextEditingController();
   @override
@@ -32,7 +24,7 @@ class _RegisterViewState extends State<RegisterView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Registration'),
+        title: Text('Login'),
         backgroundColor: Colors.amber,
       ),
      body:FutureBuilder(
@@ -66,33 +58,29 @@ class _RegisterViewState extends State<RegisterView> {
              
           ),
            ElevatedButton(onPressed: ()async{
-             
-          try{
-               final email=_email.text;
+             try{
+             final email=_email.text;
              final password=_password.text;
-             final user_cred=await FirebaseAuth.instance.createUserWithEmailAndPassword(
+             final user_cred=await FirebaseAuth.instance.signInWithEmailAndPassword(
               email: email, 
               password: password);
             print(user_cred);
-          }
-          on FirebaseAuthException catch(e){
-              
-              if(e.code=='email-already-in-use'){
-                print("email already in use");
-              }
-              else if(e.code=='invalid-email'){
-                print('invalid-email');
-              }
-              else if(e.code=="weak-password"){
-                print("weak password");
-              }
-              
-              else{
-                print(e.code);
-              }
-          }
+           }
+           on FirebaseAuthException catch (e) {
+    if (e.code == 'user-not-found') {
+      print('No user found for that email.');
+    } else if (e.code == 'wrong-password') {
+      print('Wrong password provided for that user.');
+    } else if (e.code == 'invalid-email') {
+      print('The email address is badly formatted.');
+    } else {
+      print('Something else happened.');
+      print(e);
+    }
+  }
+           
            },
-                child: Text('Register'),),
+                child: Text('Login'),),
          ],
        );
          default:
@@ -104,4 +92,5 @@ class _RegisterViewState extends State<RegisterView> {
      ),
     );
   }
+ 
 }
