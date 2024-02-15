@@ -1,15 +1,18 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/views/LoginView.dart';
+//import 'package:flutter_application_2/views/RegisterView.dart';
 import 'firebase_options.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MaterialApp(
     title: 'first app',
-    home: HomePage(),
+    home: LoginView(),
   ));
 }
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 

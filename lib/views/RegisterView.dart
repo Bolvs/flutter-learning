@@ -71,6 +71,13 @@ class _RegisterViewState extends State<RegisterView> {
               
               if(e.code=='email-already-in-use'){
                 print("email already in use");
+                const snackBar = SnackBar(
+                content: Text('Email already in use'),
+                );
+
+// Find the ScaffoldMessenger in the widget tree
+// and use it to show a SnackBar.
+                ScaffoldMessenger.of(context).showSnackBar(snackBar); 
               }
               else if(e.code=='invalid-email'){
                 print('invalid-email');

@@ -67,15 +67,22 @@ class _LoginViewState extends State<LoginView> {
             print(user_cred);
            }
            on FirebaseAuthException catch (e) {
-    if (e.code == 'user-not-found') {
-      print('No user found for that email.');
-    } else if (e.code == 'wrong-password') {
-      print('Wrong password provided for that user.');
-    } else if (e.code == 'invalid-email') {
-      print('The email address is badly formatted.');
-    } else {
-      print('Something else happened.');
-      print(e);
+            if (e.code == 'user-not-found') {
+              print('No user found for that email.');
+              const snackBar = SnackBar(
+                        content: Text('No user found'),
+                        );
+
+// Find the ScaffoldMessenger in the widget tree
+// and use it to show a SnackBar.
+            ScaffoldMessenger.of(context).showSnackBar(snackBar); 
+            } else if (e.code == 'wrong-password') {
+              print('Wrong password provided for that user.');
+            } else if (e.code == 'invalid-email') {
+              print('The email address is badly formatted.');
+            } else {
+              print('Something else happened.');
+              print(e);
     }
   }
            
