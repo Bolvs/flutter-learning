@@ -22,20 +22,7 @@ class _RegisterViewState extends State<RegisterView> {
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Registration'),
-        backgroundColor: Colors.amber,
-      ),
-     body:FutureBuilder(
-      future:  Firebase.initializeApp(
-               options: DefaultFirebaseOptions.currentPlatform,
-             ),
-       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-        switch (snapshot.connectionState){
-          
-          case ConnectionState.done:
-          return Column(
+    return Column(
          children: [
           TextField(
             controller: _email,
@@ -94,13 +81,5 @@ class _RegisterViewState extends State<RegisterView> {
                 child: Text('Register'),),
          ],
        );
-         default:
-         return Text('...Loading...');   // TODO: Handle this case.
-        }
-        
-        }, 
-      
-     ),
-    );
   }
 }

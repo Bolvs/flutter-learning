@@ -22,20 +22,7 @@ class _LoginViewState extends State<LoginView> {
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Login'),
-        backgroundColor: Colors.amber,
-      ),
-     body:FutureBuilder(
-      future:  Firebase.initializeApp(
-               options: DefaultFirebaseOptions.currentPlatform,
-             ),
-       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-        switch (snapshot.connectionState){
-          
-          case ConnectionState.done:
-          return Column(
+   return Column(
          children: [
           TextField(
             controller: _email,
@@ -90,14 +77,6 @@ class _LoginViewState extends State<LoginView> {
                 child: Text('Login'),),
          ],
        );
-         default:
-         return Text('...Loading...');   // TODO: Handle this case.
-        }
-        
-        }, 
-      
-     ),
-    );
   }
  
 }
