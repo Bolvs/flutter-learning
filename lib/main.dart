@@ -1,16 +1,21 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/views/LoginView.dart';
+import 'package:flutter_application_2/views/RegisterView.dart';
+import 'package:flutter_application_2/views/login_view.dart';
 
 //import 'package:flutter_application_2/views/RegisterView.dart';
 import 'firebase_options.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MaterialApp(
+  runApp( MaterialApp(
     title: 'first app',
-    home: HomePage(),
+    home: const HomePage(),
+    routes:{
+      '/login/': (context) => const LoginView(),
+      '/register/':(context) => const RegisterView(),
+    },
   ));
 }
 
