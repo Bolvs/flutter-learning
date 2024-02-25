@@ -1,3 +1,5 @@
+
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/constants/routes.dart';
@@ -17,12 +19,16 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
         title: const Text('Verify Email'),
       ),
        body: Column(children: [
-          const Text('Please verify your email address:'),
+          const Text("we've already sent you an email for registration"),
           ElevatedButton(onPressed: () async{
             final user = FirebaseAuth.instance.currentUser;
             await user?.sendEmailVerification();
             Navigator.of(context).pushNamedAndRemoveUntil(loginRoute, (route) => false);
-          }, child: const Text('Send Email Verification'))
+          }, child: const Text('Resend Email Verification')),
+          ElevatedButton(onPressed: () async{
+           await FirebaseAuth.instance.signOut();
+           Navigator.of(context).pushNamedAndRemoveUntil(registerRoute, (route) => false);
+          }, child: const Text('Restart')),
         ]),
      );
   }

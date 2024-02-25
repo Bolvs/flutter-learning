@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/constants/routes.dart';
-
+import 'package:flutter_application_2/utilities/show_error_dialog.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -56,30 +56,28 @@ class _RegisterViewState extends State<RegisterView> {
                  final user_cred=await FirebaseAuth.instance.createUserWithEmailAndPassword(
                   email: email, 
                   password: password);
-                print(user_cred);
+                   final user = FirebaseAuth.instance.currentUser;
+                   await user?.sendEmailVerification();
+                Navigator.of(context).pushNamed(verify );
               }
               on FirebaseAuthException catch(e){
                   
                   if(e.code=='email-already-in-use'){
-                    print("email already in use");
-                    const snackBar = SnackBar(
-                    content: Text('Email already in use'),
-                    );
-        
-        // Find the ScaffoldMessenger in the widget tree
-        // and use it to show a SnackBar.
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar); 
+                    showErrorDialog(context, 'email-already-in-use');
                   }
                   else if(e.code=='invalid-email'){
-                    print('invalid-email');
+                    showErrorDialog(context, 'invalid-email');
                   }
                   else if(e.code=="weak-password"){
-                    print("weak password");
+                    showErrorDialog(context, "weak-password");
                   }
                   
                   else{
-                    print(e.code);
+                   showErrorDialog(context, e.toString());
                   }
+              }
+              catch(e){
+                showErrorDialog(context, e.toString());
               }
                },
                     child: Text('Register'),),
