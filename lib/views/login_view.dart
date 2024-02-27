@@ -1,6 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/constants/routes.dart';
+import 'package:flutter_application_2/services/auth/auth_exceptions.dart';
+import 'package:flutter_application_2/services/auth/auth_service.dart';
 import 'package:flutter_application_2/utilities/show_error_dialog.dart';
 
 class LoginView extends StatefulWidget {
@@ -16,7 +19,6 @@ class _LoginViewState extends State<LoginView> {
   late final TextEditingController _password = TextEditingController();
   @override
   void dispose() {
-    // TODO: implement dispose
     _email.dispose();
     _password.dispose();
     super.dispose();
@@ -35,10 +37,10 @@ class _LoginViewState extends State<LoginView> {
             enableSuggestions: false,
             autocorrect: false,
             keyboardType: TextInputType.emailAddress,
-            decoration: InputDecoration(hintText: ' Email'),
+            decoration: const InputDecoration(hintText: ' Email'),
           ),
           TextField(
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: ' Password',
             ),
             controller: _password,
@@ -48,34 +50,31 @@ class _LoginViewState extends State<LoginView> {
           ),
           ElevatedButton(
             onPressed: () async {
+              final email = _email.text;
+              final password = _password.text;
               try {
-                final email = _email.text;
-                final password = _password.text;
-                final user_cred = await FirebaseAuth.instance
-                    .signInWithEmailAndPassword(
-                        email: email, password: password);
-                print(user_cred);
-                final user = FirebaseAuth.instance.currentUser;
-                if (user != null && user.emailVerified) {
+                await AuthService.firebase().login(
+                  email: email,
+                  password: password,
+                );
+
+                final user = AuthService.firebase().currentUser;
+                if (user != null && user.isEmailVerified) {
                   Navigator.of(context)
                       .pushNamedAndRemoveUntil(notesRoute, (route) => false);
                 } else {
                   Navigator.of(context)
                       .pushNamedAndRemoveUntil(verify, (route) => false);
                 }
-              } on FirebaseAuthException catch (e) {
-                if (e.code == 'user-not-found') {
-                  showErrorDialog(context, 'user not found');
-                } else if (e.code == 'wrong-password') {
-                  showErrorDialog(context, 'wrong-password');
-                } else if (e.code == 'invalid-email') {
-                  showErrorDialog(context, 'invalid-email');
-                } else {
-                  showErrorDialog(context, e.toString());
-                  //print(e);
-                }
-              } catch (e) {
-                showErrorDialog(context, e.toString());
+              } on UserNotFoundAuthException {
+                await showErrorDialog(
+                  context,
+                  'user not found',
+                );
+              } on WrongPasswordAuthException {
+                await showErrorDialog(context, 'wrong-password');
+              } on GenericException {
+                await showErrorDialog(context, 'Authentication Error');
               }
             },
             child: const Text('Login'),
