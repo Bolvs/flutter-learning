@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter_application_2/services/auth/auth_exceptions.dart';
 import 'package:flutter_application_2/services/auth/auth_provider.dart';
 import 'package:flutter_application_2/services/auth/auth_user.dart';
@@ -13,7 +11,7 @@ void main() {
     });
     test('cant logout if not logged in', () {
       expect(provider.logOut(),
-          throwsA(const TypeMatcher<notInitializedException>()));
+          throwsA(const TypeMatcher<NotInitializedException>()));
     });
     test('should be able to initialze', () async {
       await provider.intialize();
@@ -35,7 +33,8 @@ void main() {
           throwsA(const TypeMatcher<UserNotFoundAuthException>()));
       final badPassUser =
           provider.createUser(email: 'any@g.com', password: 'fofofo');
-      expect(badPassUser, throwsA(TypeMatcher<WrongPasswordAuthException>()));
+      expect(badPassUser,
+          throwsA(const TypeMatcher<WrongPasswordAuthException>()));
 
       final user = await provider.createUser(
         email: 'sadff',
@@ -63,7 +62,7 @@ void main() {
   });
 }
 
-class notInitializedException implements Exception {}
+class NotInitializedException implements Exception {}
 
 class MockAuthProvider implements AuthProvider {
   AuthUser? _user;
@@ -74,7 +73,7 @@ class MockAuthProvider implements AuthProvider {
     required String email,
     required String password,
   }) async {
-    if (!_isInitialized) throw notInitializedException();
+    if (!_isInitialized) throw NotInitializedException();
     await Future.delayed(const Duration(seconds: 1));
     return login(
       email: email,
@@ -83,7 +82,6 @@ class MockAuthProvider implements AuthProvider {
   }
 
   @override
-  // TODO: implement currentUser
   AuthUser? get currentUser => _user;
 
   @override
@@ -94,7 +92,7 @@ class MockAuthProvider implements AuthProvider {
 
   @override
   Future<void> logOut() async {
-    if (!_isInitialized) throw notInitializedException();
+    if (!_isInitialized) throw NotInitializedException();
     if (_user == null) throw UserNotFoundAuthException();
     await Future.delayed(const Duration(seconds: 1));
     _user = null;
@@ -105,7 +103,7 @@ class MockAuthProvider implements AuthProvider {
     required String email,
     required String password,
   }) {
-    if (!_isInitialized) throw notInitializedException();
+    if (!_isInitialized) throw NotInitializedException();
     if (email == 'asd@g.com') throw UserNotFoundAuthException();
     if (password == 'fofofo') throw WrongPasswordAuthException();
 
@@ -116,7 +114,7 @@ class MockAuthProvider implements AuthProvider {
 
   @override
   Future<void> sendEmailVerification() async {
-    if (!_isInitialized) throw notInitializedException();
+    if (!_isInitialized) throw NotInitializedException();
     final user = _user;
     if (user == null) throw UserNotFoundAuthException();
     const newUser = AuthUser(isEmailVerified: true);
