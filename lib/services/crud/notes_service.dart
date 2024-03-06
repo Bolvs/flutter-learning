@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_application_2/services/crud/crud_exceptions.dart';
 import "package:sqflite/sqflite.dart";
@@ -6,6 +8,11 @@ import 'package:path/path.dart' show join;
 
 class NotesService {
   Database? _db;
+
+  List<DatabaseNote> _note = [];
+  final _notesStreamController =
+      StreamController<List<DatabaseNote>>.broadcast();
+
   Future<DatabaseNote> updateNote({
     required DatabaseNote note,
     required String text,
