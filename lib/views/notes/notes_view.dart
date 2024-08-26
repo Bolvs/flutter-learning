@@ -4,7 +4,6 @@ import 'package:flutter_application_2/enum/menu_action.dart';
 import 'package:flutter_application_2/services/auth/auth_service.dart';
 import 'package:flutter_application_2/services/cloud/cloud_note.dart';
 import 'package:flutter_application_2/services/cloud/firebase_cloud_storage.dart';
-import 'package:flutter_application_2/services/crud/notes_service.dart';
 import 'package:flutter_application_2/utilities/dialog/logout_dialog.dart';
 import 'package:flutter_application_2/views/notes/notes_list_view.dart';
 
