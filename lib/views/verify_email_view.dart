@@ -1,8 +1,9 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/constants/routes.dart';
-import 'package:flutter_application_2/services/auth/auth_service.dart';
+import 'package:flutter_application_2/services/auth/bloc/auth_bloc.dart';
+import 'package:flutter_application_2/services/auth/bloc/auth_events.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class VerifyEmailView extends StatefulWidget {
   const VerifyEmailView({super.key});
@@ -22,16 +23,16 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
         const Text("we've already sent you an email for registration"),
         ElevatedButton(
             onPressed: () async {
-              await AuthService.firebase().sendEmailVerification();
-              Navigator.of(context)
-                  .pushNamedAndRemoveUntil(loginRoute, (route) => false);
+              context.read<AuthBloc>().add(
+                    const AuthEventSendEmailVerification(),
+                  );
             },
             child: const Text('Resend Email Verification')),
         ElevatedButton(
             onPressed: () async {
-              await AuthService.firebase().logOut();
-              Navigator.of(context)
-                  .pushNamedAndRemoveUntil(registerRoute, (route) => false);
+              context.read<AuthBloc>().add(
+                    const AuthEventLogOut(),
+                  );
             },
             child: const Text('Restart')),
       ]),

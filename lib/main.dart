@@ -6,8 +6,8 @@ import 'package:flutter_application_2/services/auth/bloc/auth_state.dart';
 import 'package:flutter_application_2/services/auth/firebase_auth_provider.dart';
 import 'package:flutter_application_2/views/notes/create_update_note_view.dart';
 import 'package:flutter_application_2/views/notes/notes_view.dart';
-import 'package:flutter_application_2/views/register_view.dart';
 import 'package:flutter_application_2/views/login_view.dart';
+import 'package:flutter_application_2/views/register_view.dart';
 import 'package:flutter_application_2/views/verify_email_view.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,10 +20,6 @@ void main() {
       child: const HomePage(),
     ),
     routes: {
-      loginRoute: (context) => const LoginView(),
-      registerRoute: (context) => const RegisterView(),
-      notesRoute: (context) => const NotesView(),
-      verify: (context) => const VerifyEmailView(),
       createOrUpdateNoteRoute: (context) => const CreateUpdateNoteView(),
     },
   ));
@@ -42,6 +38,8 @@ class HomePage extends StatelessWidget {
         return const VerifyEmailView();
       } else if (state is AuthStateLoggedOut) {
         return const LoginView();
+      } else if (state is AuthStateRegistering) {
+        return const RegisterView();
       } else {
         return const Scaffold(
           body: CircularProgressIndicator(),
