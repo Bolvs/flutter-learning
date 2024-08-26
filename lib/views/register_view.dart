@@ -66,7 +66,7 @@ class _RegisterViewState extends State<RegisterView> {
                 await showErrorDialog(context, 'invalid-email');
               } on WeakPasswordAuthException {
                 await showErrorDialog(context, "weak-password");
-              } on GenericException {
+              } on GenericAuthException {
                 await showErrorDialog(context, "Failed to Register");
               }
             },

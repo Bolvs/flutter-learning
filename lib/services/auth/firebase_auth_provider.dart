@@ -32,10 +32,10 @@ class FireBaseAuthProvider implements AuthProvider {
       } else if (e.code == 'weak-password') {
         throw WeakPasswordAuthException();
       } else {
-        throw GenericException();
+        throw GenericAuthException();
       }
     } catch (_) {
-      throw GenericException();
+      throw GenericAuthException();
     }
   }
 
@@ -82,10 +82,10 @@ class FireBaseAuthProvider implements AuthProvider {
       } else if (e.code == 'invalid-email') {
         throw InvalidEmailAuthException();
       } else {
-        throw GenericException();
+        throw GenericAuthException();
       }
     } catch (_) {
-      throw GenericException();
+      throw GenericAuthException();
     }
   }
 
