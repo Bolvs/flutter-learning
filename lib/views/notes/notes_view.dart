@@ -32,14 +32,14 @@ class _NotesViewState extends State<NotesView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Your Notes'),
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: const Color(0xFFcab2ff),
         actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.of(context).pushNamed(createOrUpdateNoteRoute);
-            },
-            icon: const Icon(Icons.add),
-          ),
+          // IconButton(
+          //   onPressed: () {
+          //     Navigator.of(context).pushNamed(createOrUpdateNoteRoute);
+          //   },
+          //   icon: const Icon(Icons.add),
+          // ),
           PopupMenuButton(
             onSelected: (value) async {
               switch (value) {
@@ -89,6 +89,12 @@ class _NotesViewState extends State<NotesView> {
               return const CircularProgressIndicator();
           }
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () =>
+            {Navigator.of(context).pushNamed(createOrUpdateNoteRoute)},
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
       ),
     );
   }

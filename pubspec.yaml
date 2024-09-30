@@ -1,12 +1,13 @@
 name: flutter_application_2
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
-  sdk: '>=3.2.5 <4.0.0'
+  sdk: ">=3.2.5 <4.0.0"
 
 dependencies:
+  lottie: ^2.2.0
   bloc: ^8.1.4
   cloud_firestore: ^4.15.8
   equatable: ^2.0.5
