@@ -71,8 +71,7 @@ class _RegisterViewState extends State<RegisterView> {
                     children: <Widget>[
                       const Material(
                         elevation: 10.0,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(50.0)),
+                        borderRadius: BorderRadius.all(Radius.circular(50.0)),
                         // child: Padding(
                         //   padding: const EdgeInsets.all(8.0),
                         //   child: Image.asset(
@@ -82,7 +81,7 @@ class _RegisterViewState extends State<RegisterView> {
                         //   ),
                         // )
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 30,
                       ),
                       Form(
@@ -90,7 +89,8 @@ class _RegisterViewState extends State<RegisterView> {
                         width: 250,
                         child: Material(
                           elevation: 5.0,
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10.0)),
                           color: const Color(0xFFa28ecc),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -138,7 +138,8 @@ class _RegisterViewState extends State<RegisterView> {
                         width: 250,
                         child: Material(
                           elevation: 5.0,
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10.0)),
                           color: const Color(0xFFa28ecc),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -184,7 +185,7 @@ class _RegisterViewState extends State<RegisterView> {
                           ),
                         ),
                       )),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Column(
@@ -218,7 +219,7 @@ class _RegisterViewState extends State<RegisterView> {
                           //   },
                           //   child: const Text('Already have an account? Login'),
                           // ),
-                          SizedBox(
+                          const SizedBox(
                             height: 48,
                           ),
                         ],

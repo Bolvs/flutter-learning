@@ -43,10 +43,18 @@ class HomePage extends StatelessWidget {
     }, builder: (context, state) {
       if (state is AuthStateLoggedIn) {
         return const NotesView();
-      } else if (state is AuthStateNeedsVerification) {
-        return const VerifyEmailView();
       } else if (state is AuthStateLoggedOut) {
         return const LoginView();
+      } else if (state is AuthStateNeedsVerification) {
+        return const VerifyEmailView();
+        // while (state is AuthStateNeedsVerification) {
+        //   WidgetsBinding.instance.addPostFrameCallback((_) {
+        //     showVerifyEmailDialog(context);
+        //   });
+        // }
+        // return const Scaffold(
+        //   body: CircularProgressIndicator(),
+        // );
       } else if (state is AuthStateForgotPassword) {
         return const ForgotPasswordView();
       } else if (state is AuthStateRegistering) {
